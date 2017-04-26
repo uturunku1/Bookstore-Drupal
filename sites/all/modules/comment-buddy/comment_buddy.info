@@ -1,5 +1,0 @@
-name = Comment CRUD
-description = Display Setting
-package = Custom
-core = 7.x
-files[] = comment_buddy.module

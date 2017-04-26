@@ -1,11 +1,11 @@
 <?php
 
 function comment_buddy_comment_insert() {
-  drupal_set_message("Comment created!");
+  drupal_set_message("Comment created");
 }
 
 function comment_buddy_comment_delete() {
-  drupal_set_message("Comment deleted!");
+  drupal_set_message("Comment deleted");
 }
 
 // function comment_buddy_comment_publish() {
@@ -13,5 +13,5 @@ function comment_buddy_comment_delete() {
 // }
 
 function comment_buddy_comment_update() {
-  drupal_set_message("Comment updated!");
+  drupal_set_message("Comment updated");
 }

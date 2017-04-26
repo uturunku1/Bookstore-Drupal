@@ -2,8 +2,8 @@
 function log_menu(){
   $items=array();
   $items['login']=array(
-    'title'=> 'You have successfully log in!',
-    'title callback' => 'title_function',
+    'title'=> 'You have successfully log in',
+    'title callback' => 'show_username',
     'page callback'=>'welcome',
     'access callback'=>TRUE,
     'type'=>MENU_CALLBACK,
@@ -22,20 +22,16 @@ function welcome(){
 
     $user_level = $GLOBALS['user']->roles;
 
-    if(isset($user_level[3])){ //admin view on login
-      return "<p>Welcome to the Admin view!</p>";
-    }else if (isset($user_level[2])){ //authenticated
-      return '<p>Nice to see you!</p>';
+    if(isset($user_level[3]) || isset($user_level[2])){ //admin or user 2 login
+      return "Welcome " .$GLOBALS['user']->name;
     }else if (isset($user_level[1])) { //anonymous
       //user_level[0] is null
-      return "Hello";
-    }else {
-      return 'No user level';
+      return "Welcome visitor";
     }
 }
 function bye(){
   // var_dump($_COOKIE);
-    return '<p>Goodbye ' . $_COOKIE['Drupal_visitor_0'] . '</p>';
+    return '<p>See you next time ' . $_COOKIE['Drupal_visitor_0'] . '</p>';
 }
 // in Drupal all enabled modules are given a chance to act whenever an event is about to take place.
 function log_user_login()
@@ -48,14 +44,12 @@ function log_user_logout()
 }
 
 function greeting_comment_insert(){
-    drupal_set_message("Thank you for the new comment");
+    drupal_set_message("Hey User");
 }
 
-function title_function() {
+function show_username() {
   $user_level = $GLOBALS['user']->roles;
-  if (isset($user_level[1])) { //anonymous
-    return "Hello new visitor";
-  } else {
-  return 'Hello ' . $GLOBALS['user']->name;
-}
+  if(isset($user_level[3]) || isset($user_level[2])) {
+    return 'You are sign in as ' . $GLOBALS['user']->name;
+  }
 }
