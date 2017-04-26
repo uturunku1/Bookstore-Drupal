@@ -1,0 +1,47 @@
+<?php
+function favorites_menu(){
+  $items=array();
+  $items['subjects']=array(
+    'title'=> 'Favorite books based on subject',
+    'page callback'=> 'display_subjects',
+    'access callback'=> TRUE,
+    'type'=> MENU_NORMAL_ITEM,
+  );
+  $items['books_computers']=array(
+    'title'=> 'List of favorite books on Computer Science',
+    'page callback'=> 'books_computers',
+    'access callback'=> TRUE,
+    'type'=> MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+function display_subjects(){
+  $subjects= array("Computer Science", "Cooking", "Gay and Lesbian", "Health", "Religion");
+  $returned_subject='<ul>';
+  foreach ($subjects as $subject) {
+    $returned_subject .= '<li>'.$subject.'</li>';
+  }
+  return $returned_subject.'</ul>';
+}
+function display_books(){
+  $books['computers']=array(
+    'titles'=>array('Best American Infographics 2016','Block Wonders How to Build Super Structures in Minecraft','The Idealist: Aaron Swartz and the Rise of Free Culture on the Internet','Dataclysm: Love, Sex, Race, and Identity – What Our Online Lives Tell Us about Our Offline Selves'),
+    'authors'=>array('Gareth Cook, Robert Krulwich','Kirsten Kearney','Justin Peters','Christian Rudder'),
+  );
+
+  $books['religion']=array(
+    'titles'=>array('Hallelujah Anyway: Rediscovering Mercy','The Sound of Gravel: A Memoir'),
+    'authors'=>array('Anne Lamott','Ruth Wariner'),
+  );
+  return $books;
+}
+function books_computers(){
+  $books= display_books();
+  $book_title="";
+  foreach ($books['computers']['titles'] as $book) {
+    // var_dump($book['computers']['authors'][0]);
+    $book_title.= $book.'<br>';
+  }
+  return $book_title;
+}

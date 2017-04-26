@@ -1,0 +1,61 @@
+<?php
+function log_menu(){
+  $items=array();
+  $items['login']=array(
+    'title'=> 'You have successfully log in!',
+    'title callback' => 'title_function',
+    'page callback'=>'welcome',
+    'access callback'=>TRUE,
+    'type'=>MENU_CALLBACK,
+  );
+  $items['logout']=array(
+    'title'=>'Successfully log out',
+    'page callback'=>'bye',
+    'access callback'=>TRUE,
+    'type'=> MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function welcome(){
+    user_cookie_save(array($GLOBALS['user']->name));
+
+    $user_level = $GLOBALS['user']->roles;
+
+    if(isset($user_level[3])){ //admin view on login
+      return "<p>Welcome to the Admin view!</p>";
+    }else if (isset($user_level[2])){ //authenticated
+      return '<p>Nice to see you!</p>';
+    }else if (isset($user_level[1])) { //anonymous
+      //user_level[0] is null
+      return "Hello";
+    }else {
+      return 'No user level';
+    }
+}
+function bye(){
+  // var_dump($_COOKIE);
+    return '<p>Goodbye ' . $_COOKIE['Drupal_visitor_0'] . '</p>';
+}
+// in Drupal all enabled modules are given a chance to act whenever an event is about to take place.
+function log_user_login()
+{
+  $_GET['destination']='login';
+}
+function log_user_logout()
+{
+  $_GET['destination']='logout';
+}
+
+function greeting_comment_insert(){
+    drupal_set_message("Thank you for the new comment");
+}
+
+function title_function() {
+  $user_level = $GLOBALS['user']->roles;
+  if (isset($user_level[1])) { //anonymous
+    return "Hello new visitor";
+  } else {
+  return 'Hello ' . $GLOBALS['user']->name;
+}
+}

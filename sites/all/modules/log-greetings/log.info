@@ -1,0 +1,5 @@
+name= log greetings
+description = display greetings when logging in or out.
+package = Custom Module
+core= 7.x
+files[] = log.module

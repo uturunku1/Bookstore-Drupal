@@ -1,0 +1,5 @@
+name= sum
+description = sum two inputs.
+package = Custom Module
+core= 7.x
+files[] = sum.module
