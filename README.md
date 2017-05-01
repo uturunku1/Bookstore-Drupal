@@ -21,7 +21,6 @@ You will need to have installed on your computer:
 * `open the phpMyAdmin and import the database backup file (bookstore/sites/db-backup)`
 * `go to localhost:8888`
 
-For additional information, please look at [here](https://www.learnhowtoprogram.com/drupal/site-building-with-the-drupal-interface/drupal-local-development-workflow)
 
 ## Database access info:
 * Database name: bookstore
