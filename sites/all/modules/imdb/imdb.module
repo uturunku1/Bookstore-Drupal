@@ -1,0 +1,60 @@
+<?php
+function imdb_menu(){
+  $items= array();
+  $items['search_movies']=array(
+    'title'=>'Search for movie info',
+    'page callback'=> 'drupal_get_form',
+    'page arguments'=>array('imdb_form'),
+    'access callback'=> TRUE,
+    'type'=>MENU_NORMAL_ITEM,
+  );
+  $items['results_page']=array(
+    'title'=> 'Results for your search',
+    'page callback'=> 'show_results',
+    'access callback'=> TRUE,
+    'type'=> MENU_CALLBACK,
+  );
+  return $items;
+}
+function imdb_form(){
+  $form['input']=array(
+    '#title'=>'Movie title',
+    '#type'=>'textfield',
+    '#description'=>t('Enter the name of the movie'),
+    '#required'=>TRUE,
+  );
+  $form['submit']=array(
+    '#type'=>'submit',
+    '#value'=>'search!',
+  );
+  return $form;
+}
+function imdb_form_submit($form, &$form_state){
+  var_dump('ok');
+  $title= $form_state['values']['input'];
+  $_SESSION['title_saved']= $title;
+  $form_state['redirect']= 'results_page';
+
+
+}
+function show_results()
+{
+  $title = $_SESSION['title_saved'];
+  $title_query = array(
+    's'=> $title,
+  );
+  $api_request = 'http://www.omdbapi.com/?'.http_build_query($title_query);
+  $result_encode = file_get_contents($api_request);
+  $result_array = json_decode($result_encode, TRUE);
+  $_SESSION['numberResults'] = $result_array['totalResults'];
+
+  if ($result_array['Response']=="False") {
+    return 'No results for this search';
+  } else {
+    $list_results='';
+    foreach ($result_array['Search'] as $result_each) {
+      $list_results.=$result_each['Title'].'<br>';
+    }
+    return $list_results;
+  }
+}

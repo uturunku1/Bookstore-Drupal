@@ -1,0 +1,5 @@
+name = imdb
+description = Displays searched movie titles.
+package = Custom Module
+core = 7.x
+files[] = imdb.module
